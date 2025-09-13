@@ -14,6 +14,7 @@ GitHub Repo: [Web_apps](https://github.com/varuns2107/Web_apps)
 - Delete a post
 - Posts stored locally in the browser (localStorage)
 
+
 ## TECH STACK
 - Frontend: React (Netlify deployment)
 - Storage: LocalStorage (in-memory)
