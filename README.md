@@ -23,21 +23,21 @@ GitHub Repo: [Web_apps](https://github.com/varuns2107/Web_apps)
 ## SETUP INSTRUCTION
 
 ### Clone the repository
-git clone https://github.com/varuns2107/Web_apps.git  
-cd Web_apps  
+-git clone https://github.com/varuns2107/Web_apps.git  
+-cd Web_apps  
 
 
 ### Backend Setup (local only)
-cd server
-npm install
-npm start
+-cd server
+-npm install
+-npm start
 -Backend runs on http://localhost:5000
 
 
 ### Frontend Setup
-cd ../client
-npm install
-npm start
+-cd ../client
+-npm install
+-npm start
 -Frontend runs on http://localhost:3000
 
 
