@@ -14,7 +14,7 @@
   :root {
     /* Dark default */
     --background: 240 10% 5%; /* ~neutral-950 */
-    --foreground: 0 0% 96%;   /* near white */
+    --foreground: 0 0% 96%; /* near white */
 
     --card: 240 10% 6.5%;
     --card-foreground: 0 0% 96%;

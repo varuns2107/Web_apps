@@ -31,9 +31,9 @@ type ToastKind = "default" | "success" | "error";
 const storeKey = "webposts.app.v1";
 
 const uid = () =>
-  (globalThis.crypto && "randomUUID" in globalThis.crypto
+  globalThis.crypto && "randomUUID" in globalThis.crypto
     ? (globalThis.crypto as Crypto).randomUUID()
-    : `id-${Date.now().toString(36)}${Math.random().toString(36).slice(2)}`);
+    : `id-${Date.now().toString(36)}${Math.random().toString(36).slice(2)}`;
 
 const nowISO = () => new Date().toISOString();
 
@@ -67,7 +67,9 @@ const demoPosts = (): PostItem[] => [
 
 // Toast system
 function useToasts() {
-  const [toasts, setToasts] = useState<{ id: string; msg: string; type: ToastKind }[]>([]);
+  const [toasts, setToasts] = useState<
+    { id: string; msg: string; type: ToastKind }[]
+  >([]);
   const push = (msg: string, type: ToastKind = "default") => {
     const id = uid();
     setToasts((t) => [...t, { id, msg, type }]);
@@ -129,7 +131,9 @@ export default function Index() {
     const q = query.trim().toLowerCase();
     if (!q) return posts;
     return posts.filter(
-      (p) => p.title.toLowerCase().includes(q) || p.content.toLowerCase().includes(q),
+      (p) =>
+        p.title.toLowerCase().includes(q) ||
+        p.content.toLowerCase().includes(q),
     );
   }, [posts, query]);
 
@@ -152,7 +156,13 @@ export default function Index() {
       push("Please provide both title and content.", "error");
       return;
     }
-    const post: PostItem = { id: uid(), title, content, createdAt: nowISO(), updatedAt: nowISO() };
+    const post: PostItem = {
+      id: uid(),
+      title,
+      content,
+      createdAt: nowISO(),
+      updatedAt: nowISO(),
+    };
     const next = [post, ...posts];
     savePosts(next);
     clearCompose();
@@ -178,7 +188,10 @@ export default function Index() {
   };
 
   const deletePost = async (id: string) => {
-    const ok = await askConfirm("Delete this post?", "You cannot undo this action.");
+    const ok = await askConfirm(
+      "Delete this post?",
+      "You cannot undo this action.",
+    );
     if (!ok) return;
     const next = posts.filter((p) => p.id !== id);
     savePosts(next);
@@ -187,7 +200,10 @@ export default function Index() {
   };
 
   const clearAll = async () => {
-    const ok = await askConfirm("Delete all posts?", "This will remove every post from local storage.");
+    const ok = await askConfirm(
+      "Delete all posts?",
+      "This will remove every post from local storage.",
+    );
     if (!ok) return;
     savePosts([]);
     push("All posts deleted", "success");
@@ -217,7 +233,10 @@ export default function Index() {
       const arr = JSON.parse(txt);
       if (!Array.isArray(arr)) throw new Error("Not an array");
       const cleaned: PostItem[] = arr
-        .filter((p: any) => p && typeof p.title === "string" && typeof p.content === "string")
+        .filter(
+          (p: any) =>
+            p && typeof p.title === "string" && typeof p.content === "string",
+        )
         .map((p: any) => ({
           id: p.id || uid(),
           title: p.title,
@@ -244,8 +263,12 @@ export default function Index() {
               <span className="text-neutral-200">WP</span>
             </div>
             <div className="flex flex-col">
-              <h1 className="text-[20px] sm:text-[22px] font-semibold tracking-tight text-neutral-100">Web Posts</h1>
-              <p className="text-[12px] text-neutral-400 leading-tight">Create, read, update, and delete posts. Stored locally.</p>
+              <h1 className="text-[20px] sm:text-[22px] font-semibold tracking-tight text-neutral-100">
+                Web Posts
+              </h1>
+              <p className="text-[12px] text-neutral-400 leading-tight">
+                Create, read, update, and delete posts. Stored locally.
+              </p>
             </div>
           </div>
 
@@ -298,7 +321,9 @@ export default function Index() {
               <div className="flex items-center justify-between px-4 sm:px-6 py-3.5 border-b border-neutral-800">
                 <div className="flex items-center gap-2">
                   <Edit3 className="size-4 text-neutral-400" />
-                  <h2 className="text-[18px] sm:text-[20px] font-semibold tracking-tight">Compose</h2>
+                  <h2 className="text-[18px] sm:text-[20px] font-semibold tracking-tight">
+                    Compose
+                  </h2>
                 </div>
                 <button
                   onClick={() => setComposeOpen(false)}
@@ -323,7 +348,10 @@ export default function Index() {
                 className="p-4 sm:p-6 space-y-4"
               >
                 <div>
-                  <label htmlFor="title" className="block text-sm text-neutral-300 mb-1.5">
+                  <label
+                    htmlFor="title"
+                    className="block text-sm text-neutral-300 mb-1.5"
+                  >
                     Title
                   </label>
                   <input
@@ -337,7 +365,10 @@ export default function Index() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="content" className="block text-sm text-neutral-300 mb-1.5">
+                  <label
+                    htmlFor="content"
+                    className="block text-sm text-neutral-300 mb-1.5"
+                  >
                     Content
                   </label>
                   <textarea
@@ -351,7 +382,9 @@ export default function Index() {
                   />
                 </div>
                 <div className="flex items-center justify-between gap-3">
-                  <p className="text-xs text-neutral-500">Tip: Use Cmd/Ctrl+Enter to post.</p>
+                  <p className="text-xs text-neutral-500">
+                    Tip: Use Cmd/Ctrl+Enter to post.
+                  </p>
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
@@ -433,10 +466,16 @@ export default function Index() {
                     <EditingCard
                       post={post}
                       onCancel={() => setEditingId(null)}
-                      onSave={(title, content) => saveEdit(post.id, title, content)}
+                      onSave={(title, content) =>
+                        saveEdit(post.id, title, content)
+                      }
                     />
                   ) : (
-                    <ReadCard post={post} onEdit={() => setEditingId(post.id)} onDelete={() => deletePost(post.id)} />
+                    <ReadCard
+                      post={post}
+                      onEdit={() => setEditingId(post.id)}
+                      onDelete={() => deletePost(post.id)}
+                    />
                   )}
                 </article>
               );
@@ -456,13 +495,18 @@ export default function Index() {
       {/* Import Modal */}
       {importOpen && (
         <div className="fixed inset-0 z-50" aria-hidden={!importOpen}>
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setImportOpen(false)} />
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            onClick={() => setImportOpen(false)}
+          />
           <div className="relative mx-auto max-w-2xl px-4 pt-24">
             <div className="rounded-xl border border-neutral-800 bg-neutral-950 shadow-xl">
               <div className="flex items-center justify-between px-4 sm:px-6 py-3.5 border-b border-neutral-800">
                 <div className="flex items-center gap-2">
                   <Upload className="size-4 text-neutral-400" />
-                  <h3 className="text-[18px] font-semibold tracking-tight">Import JSON</h3>
+                  <h3 className="text-[18px] font-semibold tracking-tight">
+                    Import JSON
+                  </h3>
                 </div>
                 <button
                   onClick={() => setImportOpen(false)}
@@ -474,7 +518,8 @@ export default function Index() {
               </div>
               <div className="p-4 sm:p-6 space-y-3">
                 <p className="text-sm text-neutral-400">
-                  Paste an array of posts or the export from this app. Schema: {"{"} id, title, content, createdAt, updatedAt {"}"}.
+                  Paste an array of posts or the export from this app. Schema:{" "}
+                  {"{"} id, title, content, createdAt, updatedAt {"}"}.
                 </p>
                 <textarea
                   rows={10}
@@ -485,7 +530,9 @@ export default function Index() {
                 />
                 <div className="flex items-center justify-end gap-2 pt-1">
                   <button
-                    onClick={() => setImportText(JSON.stringify(demoPosts(), null, 2))}
+                    onClick={() =>
+                      setImportText(JSON.stringify(demoPosts(), null, 2))
+                    }
                     className="inline-flex items-center gap-2 rounded-lg border border-neutral-800 bg-neutral-900/60 px-3 py-2.5 text-sm font-medium text-neutral-200 hover:bg-neutral-900 hover:border-neutral-700 transition-colors"
                     title="Load demo JSON"
                   >
@@ -518,8 +565,12 @@ export default function Index() {
                     <AlertTriangle className="size-5 text-amber-400" />
                   </div>
                   <div>
-                    <h4 className="text-[18px] font-semibold tracking-tight">{confirmTitleRef.current}</h4>
-                    <p className="text-sm text-neutral-400">{confirmDescRef.current}</p>
+                    <h4 className="text-[18px] font-semibold tracking-tight">
+                      {confirmTitleRef.current}
+                    </h4>
+                    <p className="text-sm text-neutral-400">
+                      {confirmDescRef.current}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center justify-end gap-2 pt-4">
@@ -561,8 +612,8 @@ export default function Index() {
               (t.type === "success"
                 ? "border-emerald-600/60 text-emerald-200"
                 : t.type === "error"
-                ? "border-red-600/60 text-red-200"
-                : "border-neutral-700 text-neutral-200")
+                  ? "border-red-600/60 text-red-200"
+                  : "border-neutral-700 text-neutral-200")
             }
           >
             {t.msg}
@@ -582,17 +633,22 @@ function ReadCard({
   onEdit: () => void;
   onDelete: () => void;
 }) {
-  const bodyPreview = post.content.length > 220 ? post.content.slice(0, 220) + "…" : post.content;
+  const bodyPreview =
+    post.content.length > 220 ? post.content.slice(0, 220) + "…" : post.content;
   return (
     <div className="flex items-start justify-between gap-4">
       <div className="min-w-0">
         <h3 className="text-[18px] sm:text-[19px] font-semibold tracking-tight text-neutral-100 line-clamp-1">
           {post.title || "(Untitled)"}
         </h3>
-        <p className="mt-1 text-sm text-neutral-400 whitespace-pre-line">{bodyPreview || "(No content)"}</p>
+        <p className="mt-1 text-sm text-neutral-400 whitespace-pre-line">
+          {bodyPreview || "(No content)"}
+        </p>
       </div>
       <div className="shrink-0 flex flex-col items-end gap-2">
-        <div className="text-[11px] text-neutral-500">Created {formatDate(post.createdAt)}</div>
+        <div className="text-[11px] text-neutral-500">
+          Created {formatDate(post.createdAt)}
+        </div>
         <div className="flex items-center gap-1.5">
           <button
             onClick={onEdit}
@@ -634,7 +690,9 @@ function EditingCard({
           <FileText className="size-4 text-neutral-400" />
           <span className="text-sm text-neutral-400">Editing</span>
         </div>
-        <span className="text-xs text-neutral-500">Last updated {formatDate(post.updatedAt)}</span>
+        <span className="text-xs text-neutral-500">
+          Last updated {formatDate(post.updatedAt)}
+        </span>
       </div>
       <div className="mt-4 space-y-3">
         <input
