@@ -314,6 +314,12 @@ export default function Index() {
                   e.preventDefault();
                   createPost();
                 }}
+                onKeyDown={(e) => {
+                  if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
+                    e.preventDefault();
+                    createPost();
+                  }
+                }}
                 className="p-4 sm:p-6 space-y-4"
               >
                 <div>
