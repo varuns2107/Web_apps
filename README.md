@@ -12,13 +12,11 @@ GitHub Repo: [Web_apps](https://github.com/varuns2107/Web_apps)
 - View all posts
 - Update an existing post
 - Delete a post
-- Posts stored in database (MongoDB)
-
+- Posts stored locally in the browser (localStorage)
 
 ## TECH STACK
 - Frontend: React (Netlify deployment)
-- Backend: Node.js + Express
-- Database: MongoDB
+- Storage: LocalStorage (in-memory)
 - Hosting: Netlify
 
 
