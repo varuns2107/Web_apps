@@ -26,13 +26,16 @@ GitHub Repo: [Web_apps](https://github.com/varuns2107/Web_apps)
 git clone https://github.com/varuns2107/Web_apps.git  
 cd Web_apps  
 
-### Backend Setup
-cd server  
-npm install  
-npm start  
-(runs on http://localhost:5000)  
 
-### Frontend Setup
+## Backend Setup (for local development only)
+To run the backend locally:
+```bash
+cd server
+npm install
+npm start
+
+
+### Frontend Setup 
 cd client  
 npm install  
 npm start  
