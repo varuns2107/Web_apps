@@ -28,17 +28,17 @@ GitHub Repo: [Web_apps](https://github.com/varuns2107/Web_apps)
 
 
 ### Backend Setup (local only)
--cd server
--npm install
--npm start
--Backend runs on http://localhost:5000
+cd server
+npm install
+npm start
+Backend runs on http://localhost:5000
 
 
 ### Frontend Setup
--cd ../client
--npm install
--npm start
--Frontend runs on http://localhost:3000
+cd ../client
+npm install
+npm start
+Frontend runs on http://localhost:3000
 
 
 <img width="1436" height="727" alt="image" src="https://github.com/user-attachments/assets/2348cd24-9563-471a-9a7e-7bd64fcade70" />
