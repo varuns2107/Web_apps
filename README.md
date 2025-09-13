@@ -35,7 +35,6 @@ npm start
 
 
 ### Frontend Setup
-```bash
 cd ../client
 npm install
 npm start
